@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: spring-app
-          image: $REPOSITORY_URI:$IMAGE_TAG
+          image: 400054515716.dkr.ecr.us-east-1.amazonaws.com/code_1:$IMAGE_TAG
           ports:
             - containerPort: 8080
