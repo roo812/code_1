@@ -1,0 +1,9 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "spring-app-task" # ECS task definition family name
+        LoadBalancerInfo:
+          ContainerName: "spring-app"
+          ContainerPort: 8080
