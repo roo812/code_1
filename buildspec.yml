@@ -23,8 +23,14 @@ phases:
       - echo "Pushing Docker image to ECR..."
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo "Build completed successfully."
+      - echo "Replacing image variables in Kubernetes manifests..."
+      - sed "s|\$REPOSITORY_URI|$REPOSITORY_URI|g; s|\$IMAGE_TAG|$IMAGE_TAG|g" ../k8s/deployment.yaml > deployment_rendered.yaml
+      - cp ../k8s/service.yaml service_rendered.yaml
+      - echo "artifacts ready"
+      
 
 artifacts:
   files:
-    - k8s/*.yaml
+    - deployment_rendered.yaml
+    - service_rendered.yaml
 
