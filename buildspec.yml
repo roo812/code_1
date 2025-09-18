@@ -10,10 +10,9 @@ phases:
       - mvn clean package -DskipTests
       - echo Logging in to Amazon ECR...
       - aws --version
-      - REPOSITORY_URI=400054515716.dkr.ecr.us-east-1.amazonaws.com/spring-app-2
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REPOSITORY_URI
-      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+      - echo "IMAGE_TAG=$IMAGE_TAG"
   build:
     commands:
       - echo "Building Docker image..."
@@ -23,7 +22,6 @@ phases:
     commands:
       - echo "Pushing Docker image to ECR..."
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo "Writing imagedefinitions.json for ECS..."
       - echo "Build completed successfully."
 
 artifacts:
