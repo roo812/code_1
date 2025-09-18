@@ -16,4 +16,4 @@ spec:
         - name: spring-app
           image: $REPOSITORY_URI:$IMAGE_TAG
           ports:
-            - containerPort: 80
+            - containerPort: 8080
