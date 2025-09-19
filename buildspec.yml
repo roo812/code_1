@@ -4,6 +4,7 @@ env:
     REPOSITORY_URI: 400054515716.dkr.ecr.us-east-1.amazonaws.com/code_1
   exported-variables:
     - IMAGE_TAG
+
 phases:
   pre_build:
     commands:
@@ -13,17 +14,18 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REPOSITORY_URI
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
       - echo "IMAGE_TAG=$IMAGE_TAG"
+
   build:
     commands:
       - echo "Building Docker image..."
-      - docker build -t 400054515716.dkr.ecr.us-east-1.amazonaws.com/code_1:$IMAGE_TAG .
+      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
 
   post_build:
     commands:
       - echo "Pushing Docker image to ECR..."
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo "Updating Kubernetes manifest with new image..."
-      - sed -i "s#IMAGE_PLACEHOLDER#$REPOSITORY_URI:$IMAGE_TAG#g" deployment.yaml
+      - echo "Replacing IMAGE_PLACEHOLDER in deployment.yaml..."
+      - sed -i "s|IMAGE_PLACEHOLDER|$REPOSITORY_URI:$IMAGE_TAG|g" deployment.yaml
       - echo "Build completed successfully."
 
 artifacts:
