@@ -16,15 +16,15 @@ phases:
   build:
     commands:
       - echo "Building Docker image..."
-      - docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+      - docker build -t 400054515716.dkr.ecr.us-east-1.amazonaws.com/code_1:$IMAGE_TAG .
 
   post_build:
     commands:
       - echo "Pushing Docker image to ECR..."
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push 400054515716.dkr.ecr.us-east-1.amazonaws.com/code_1:$IMAGE_TAG
       - echo "Build completed successfully."
 
 artifacts:
   files:
-    - deployment.yaml
-    - service.yaml
+    - deployment.yml
+    - service.yml
