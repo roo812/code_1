@@ -21,7 +21,9 @@ phases:
   post_build:
     commands:
       - echo "Pushing Docker image to ECR..."
-      - docker push 400054515716.dkr.ecr.us-east-1.amazonaws.com/code_1:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo "Updating Kubernetes manifest with new image..."
+      - sed -i "s#IMAGE_PLACEHOLDER#$REPOSITORY_URI:$IMAGE_TAG#g" deployment.yaml
       - echo "Build completed successfully."
 
 artifacts:
