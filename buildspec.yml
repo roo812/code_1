@@ -26,7 +26,11 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo "Replacing IMAGE_PLACEHOLDER in deployment.yaml..."
       - sed -i "s|IMAGE_PLACEHOLDER|$REPOSITORY_URI:$IMAGE_TAG|g" deployment.yaml
-      - echo "Build completed successfully."
+      - echo "Updating kubeconfig for EKS..."
+      - aws eks --region us-east-1 update-kubeconfig --name my-cluster
+      - echo "Applying Kubernetes manifests..."
+      - kubectl apply -f deployment.yaml -f service.yaml
+      - echo "Build and deployment completed successfully."
 
 artifacts:
   files:
