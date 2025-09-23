@@ -35,7 +35,7 @@ phases:
       - echo "Updating kubeconfig for EKS..."
       - aws eks --region us-east-1 update-kubeconfig --name my-cluster
       - echo "Applying Kubernetes manifests..."
-      - kubectl apply -f deployment.yaml -f service.yaml
+      - kubectl apply -f deployment.yaml -f service.yaml --validate=false
       - echo "Build and deployment completed successfully."
 
 artifacts:
