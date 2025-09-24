@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    REPOSITORY_URI: 400054515716.dkr.ecr.us-east-1.amazonaws.com/code_1
+    REPOSITORY_URI: 400054515716.dkr.ecr.ap-south-1.amazonaws.com/code_1
   exported-variables:
     - IMAGE_TAG
 
