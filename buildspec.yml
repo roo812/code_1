@@ -18,7 +18,7 @@ phases:
       - mvn clean package -DskipTests
       - echo Logging in to Amazon ECR...
       - aws --version
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 400054515716.dkr.ecr.ap-south-1.amazonaws.com/code_1
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 400054515716.dkr.ecr.ap-south-1.amazonaws.com/code_1
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
       - echo "IMAGE_TAG=$IMAGE_TAG"
 
